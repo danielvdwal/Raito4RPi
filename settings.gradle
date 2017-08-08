@@ -1,0 +1,4 @@
+rootProject.name = 'Raito4RPi'
+
+include 'components'
+include 'end-to-end-testclient'

@@ -1,0 +1,75 @@
+buildscript {
+	repositories {
+		maven {
+			url("https://plugins.gradle.org/m2/")
+		}
+	}
+	dependencies {
+		classpath("com.diffplug.spotless:spotless-plugin-gradle:3.4.0")
+	}
+}
+
+allprojects{
+
+	buildscript {
+		repositories {
+			maven {
+				url("https://plugins.gradle.org/m2/")
+			}
+		}
+	}
+
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'com.diffplug.gradle.spotless'
+
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = 1.8
+
+	repositories {
+		jcenter()
+	}
+
+	dependencies{
+		implementation('org.apache.commons:commons-lang3:3.6')
+		testImplementation('org.mockito:mockito-core:2.8.47')
+		testImplementation('org.assertj:assertj-core:3.8.0')
+		testImplementation('junit:junit:4.12')
+	}
+
+	idea {
+		module {
+			inheritOutputDirs = true
+			downloadJavadoc = true
+			downloadSources = true
+			outputDir = file('build/classes/main')
+			testOutputDir = file('build/classes/test')
+		}
+	}
+
+	spotless {
+		format 'misc', {
+			target '**/*.gradle', '**/*.md', '**/.gitignore'
+
+			trimTrailingWhitespace()
+			indentWithTabs() // or spaces. Takes an integer argument if you don't like 4
+			endWithNewline()
+		}
+	}
+}
+
+idea {
+	project {
+		jdkName = '1.8'
+		languageLevel = '8'
+		vcs = 'Git'
+	}
+}
+
+spotless {
+	java {
+		removeUnusedImports()
+		importOrderFile 'src/main/resources/formatter/spotless.importorder'
+		eclipse().configFile 'src/main/resources/formatter/spotless.eclipse-format.xml'
+	}
+}
