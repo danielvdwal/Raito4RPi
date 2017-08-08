@@ -1,1 +1,3 @@
 rootProject.name = 'Raito4RPi'
+
+include 'components'
