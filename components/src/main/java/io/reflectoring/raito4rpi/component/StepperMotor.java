@@ -26,11 +26,11 @@ public class StepperMotor {
 	 * @param pin0
 	 *            the first pin the motor is connected to
 	 * @param pin1
-	 *            the first pin the motor is connected to
+	 *            the second pin the motor is connected to
 	 * @param pin2
-	 *            the first pin the motor is connected to
+	 *            the third pin the motor is connected to
 	 * @param pin3
-	 *            the first pin the motor is connected to
+	 *            the forth pin the motor is connected to
 	 * @param gpioController
 	 *            used to provide pi4j Pin-Implementation
 	 */
@@ -44,11 +44,11 @@ public class StepperMotor {
 	 * @param pin0
 	 *            the first pin the motor is connected to
 	 * @param pin1
-	 *            the first pin the motor is connected to
+	 *            the second pin the motor is connected to
 	 * @param pin2
-	 *            the first pin the motor is connected to
+	 *            the third pin the motor is connected to
 	 * @param pin3
-	 *            the first pin the motor is connected to
+	 *            the forth pin the motor is connected to
 	 * @param stepInterval
 	 *            time in ms to wait before next step should be executed
 	 * @param stepsPerRevolution
