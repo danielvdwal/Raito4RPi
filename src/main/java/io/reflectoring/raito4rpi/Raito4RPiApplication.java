@@ -1,9 +1,12 @@
 package io.reflectoring.raito4rpi;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class Raito4RPiApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Konnichiwa sekai (Hello World)!");
+		SpringApplication.run(Raito4RPiApplication.class, args);
 	}
-
 }
