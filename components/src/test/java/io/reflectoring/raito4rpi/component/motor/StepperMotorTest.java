@@ -1,16 +1,17 @@
 package io.reflectoring.raito4rpi.component.motor;
 
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import org.junit.Before;
-import org.junit.Test;
-
 import static com.pi4j.io.gpio.PinState.LOW;
 import static com.pi4j.io.gpio.RaspiPin.*;
 import static io.reflectoring.raito4rpi.component.motor.StepSequenceStrategy.SINGLE_STEP_SEQUENCE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 public class StepperMotorTest {
 

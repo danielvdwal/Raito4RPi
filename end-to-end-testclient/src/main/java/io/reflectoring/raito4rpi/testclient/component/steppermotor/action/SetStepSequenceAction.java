@@ -1,9 +1,9 @@
 package io.reflectoring.raito4rpi.testclient.component.steppermotor.action;
 
-import io.reflectoring.raito4rpi.component.motor.StepperMotor;
-
 import static io.reflectoring.raito4rpi.component.motor.StepSequenceStrategy.*;
 import static io.reflectoring.raito4rpi.testclient.Raito4RPiEndToEndTestClient.READ_INPUT_INDICATOR;
+
+import io.reflectoring.raito4rpi.component.motor.StepperMotor;
 
 public class SetStepSequenceAction extends StepperMotorAction {
 

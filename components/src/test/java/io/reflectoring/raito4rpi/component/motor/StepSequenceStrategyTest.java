@@ -1,8 +1,8 @@
 package io.reflectoring.raito4rpi.component.motor;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.Test;
 
 public class StepSequenceStrategyTest {
 
