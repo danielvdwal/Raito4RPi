@@ -1,11 +1,11 @@
-package io.reflectoring.raito4rpi.component;
-
-import static com.pi4j.io.gpio.PinState.LOW;
+package io.reflectoring.raito4rpi.component.motor;
 
 import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
+
+import static com.pi4j.io.gpio.PinState.LOW;
 
 /**
  * Represents an actual Stepper Motor.
@@ -19,6 +19,8 @@ public class StepperMotor {
 	private static final int DEFAULT_STEPS_PER_REVOLUTION = 2038;
 
 	private final GpioStepperMotorComponent motor;
+
+	private StepSequenceStrategy stepSequenceStrategy;
 
 	/**
 	 * Contructs an instance using a default step interval as well as a default steps per revolution configuration.
@@ -72,17 +74,19 @@ public class StepperMotor {
 	}
 
 	/**
-	 * Sets the step sequence to use. There are different kinds of step sequences like single step, half step or double step squence.
+	 * Returns the step sequence strategy currently used.
 	 */
-	public void setStepSequence(byte[] sequence) {
-		motor.setStepSequence(sequence);
+	public StepSequenceStrategy getStepSequenceStrategy() {
+		return stepSequenceStrategy;
 	}
 
 	/**
-	 * Returns the step sequence currently used.
+	 * Sets the step sequence strategy to use. There are different strategies like single step, half step or double step squence.
 	 */
-	public byte[] getStepSequence() {
-		return motor.getStepSequence();
+	public void setStepSequenceStrategy(StepSequenceStrategy stepSequenceStrategy) {
+		this.stepSequenceStrategy = stepSequenceStrategy;
+		byte[] stepSequence = stepSequenceStrategy.getStepSequence();
+		motor.setStepSequence(stepSequence);
 	}
 
 	/**

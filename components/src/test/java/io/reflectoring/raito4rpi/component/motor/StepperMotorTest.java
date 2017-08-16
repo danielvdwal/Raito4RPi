@@ -1,16 +1,16 @@
-package io.reflectoring.raito4rpi.component;
-
-import static com.pi4j.io.gpio.PinState.LOW;
-import static com.pi4j.io.gpio.RaspiPin.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.junit.Before;
-import org.junit.Test;
+package io.reflectoring.raito4rpi.component.motor;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import org.junit.Before;
+import org.junit.Test;
+
+import static com.pi4j.io.gpio.PinState.LOW;
+import static com.pi4j.io.gpio.RaspiPin.*;
+import static io.reflectoring.raito4rpi.component.motor.StepSequenceStrategy.SINGLE_STEP_SEQUENCE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class StepperMotorTest {
 
@@ -30,24 +30,23 @@ public class StepperMotorTest {
 	}
 
 	@Test
-	public void getStepSequenceIsNullWhenNotSet() {
+	public void getStepSequenceStrategyIsNullWhenNotSet() {
 		// when
-		byte[] stepSequence = sut.getStepSequence();
+		StepSequenceStrategy stepSequenceStrategy = sut.getStepSequenceStrategy();
 
 		// then
-		assertThat(stepSequence).isNull();
+		assertThat(stepSequenceStrategy).isNull();
 	}
 
 	@Test
 	public void getStepSequenceReturnsSameSequenceAsSet() {
 		// given
-		byte[] stepSequence = new byte[] { 0b0011, 0b0110, 0b1100, 0b1001 };
-		sut.setStepSequence(stepSequence);
+		sut.setStepSequenceStrategy(SINGLE_STEP_SEQUENCE);
 
 		// when
-		byte[] result = sut.getStepSequence();
+		StepSequenceStrategy stepSequenceStrategy = sut.getStepSequenceStrategy();
 
 		// then
-		assertThat(result).isEqualTo(stepSequence);
+		assertThat(stepSequenceStrategy).isEqualTo(SINGLE_STEP_SEQUENCE);
 	}
 }

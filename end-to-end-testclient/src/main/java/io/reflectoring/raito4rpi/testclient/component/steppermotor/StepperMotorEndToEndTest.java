@@ -6,7 +6,7 @@ import static io.reflectoring.raito4rpi.testclient.Raito4RPiEndToEndTestClient.S
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.util.Console;
 
-import io.reflectoring.raito4rpi.component.StepperMotor;
+import io.reflectoring.raito4rpi.component.motor.StepperMotor;
 import io.reflectoring.raito4rpi.testclient.component.ComponentEndToEndTest;
 import io.reflectoring.raito4rpi.testclient.component.steppermotor.action.RotateAction;
 import io.reflectoring.raito4rpi.testclient.component.steppermotor.action.SetStepSequenceAction;

@@ -6,7 +6,7 @@ import static io.reflectoring.raito4rpi.testclient.Raito4RPiEndToEndTestClient.S
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.util.Console;
 
-import io.reflectoring.raito4rpi.component.RgbLed;
+import io.reflectoring.raito4rpi.component.led.RgbLed;
 import io.reflectoring.raito4rpi.testclient.component.ComponentEndToEndTest;
 import io.reflectoring.raito4rpi.testclient.component.rgbled.action.*;
 
