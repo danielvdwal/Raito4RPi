@@ -18,6 +18,7 @@ public class SetStepSequenceAction extends StepperMotorAction {
 		CONSOLE.println("[0] - single step");
 		CONSOLE.println("[1] - double step");
 		CONSOLE.println("[2] - half step");
+		CONSOLE.println("[3] - over step");
 		CONSOLE.print(READ_INPUT_INDICATOR);
 		String input = System.console().readLine();
 
@@ -30,6 +31,9 @@ public class SetStepSequenceAction extends StepperMotorAction {
 			break;
 		case "2":
 			stepperMotor.setStepSequenceStrategy(HALF_STEP_SEQUENCE);
+			break;
+		case "3":
+			stepperMotor.setStepSequenceStrategy(OVER_STEP_SEQUENCE);
 			break;
 		default:
 			CONSOLE.println(INVALID_INPUT_MESSAGE);

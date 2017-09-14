@@ -12,11 +12,13 @@ import com.pi4j.io.gpio.Pin;
  */
 public class StepperMotor {
 
-	// anything lower than 2 ms seem not to work when using a single step sequence
-	private static final int DEFAULT_STEP_INTERVAL = 2;
+	// anything lower than 3 ms seems not to work when using a over step sequence
+	private static final int DEFAULT_STEP_INTERVAL = 3;
 
 	// Using a 28BYJ-48 there are 32*64 (64 because of the different gears rotating) steps per revolution
-	private static final int DEFAULT_STEPS_PER_REVOLUTION = 2038;
+	private static final int DEFAULT_STEPS_PER_REVOLUTION = 2048;
+
+	private final int initialStepsPerRevolution;
 
 	private final GpioStepperMotorComponent motor;
 
@@ -52,7 +54,7 @@ public class StepperMotor {
 	 * @param pin3
 	 *            the forth pin the motor is connected to
 	 * @param stepInterval
-	 *            time in ms to wait before next step should be executed
+	 *            time in ms to wait before next step should be executed in milliseconds
 	 * @param stepsPerRevolution
 	 *            number of steps it takes the motor to perform a whole revolution (360 degrees)
 	 * @param gpioController
@@ -64,6 +66,7 @@ public class StepperMotor {
 		pins[1] = gpioController.provisionDigitalOutputPin(pin1, LOW);
 		pins[2] = gpioController.provisionDigitalOutputPin(pin2, LOW);
 		pins[3] = gpioController.provisionDigitalOutputPin(pin3, LOW);
+		initialStepsPerRevolution = stepsPerRevolution;
 
 		// stop motor when the program terminates
 		gpioController.setShutdownOptions(true, LOW, pins);
@@ -87,6 +90,8 @@ public class StepperMotor {
 		this.stepSequenceStrategy = stepSequenceStrategy;
 		byte[] stepSequence = stepSequenceStrategy.getStepSequence();
 		motor.setStepSequence(stepSequence);
+		int stepsPerRevolution = (int) (initialStepsPerRevolution / stepSequenceStrategy.getStepModifier());
+		motor.setStepsPerRevolution(stepsPerRevolution);
 	}
 
 	/**

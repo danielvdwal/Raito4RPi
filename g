@@ -1,2 +1,2 @@
 #!/bin/bash
-./gradlew $*
+./gradlew --parallel --max-workers=3 $*
