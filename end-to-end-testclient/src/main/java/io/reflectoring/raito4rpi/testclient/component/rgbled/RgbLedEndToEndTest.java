@@ -1,22 +1,21 @@
 package io.reflectoring.raito4rpi.testclient.component.rgbled;
 
-import static com.pi4j.io.gpio.RaspiPin.*;
 import static io.reflectoring.raito4rpi.testclient.Raito4RPiEndToEndTestClient.SEPARATOR_LINE;
 
-import com.pi4j.io.gpio.GpioController;
 import com.pi4j.util.Console;
 
 import io.reflectoring.raito4rpi.component.led.RgbLed;
 import io.reflectoring.raito4rpi.testclient.component.ComponentEndToEndTest;
+import io.reflectoring.raito4rpi.testclient.component.ComponentFactory;
 import io.reflectoring.raito4rpi.testclient.component.rgbled.action.*;
 
 public final class RgbLedEndToEndTest extends ComponentEndToEndTest {
 
-	private final RgbLed sut;
+	private RgbLed sut;
 
-	public RgbLedEndToEndTest(String componentId, String componentName, Console console, GpioController gpioController) {
+	public RgbLedEndToEndTest(String componentId, String componentName, Console console) {
 		super(componentId, componentName, console);
-		sut = new RgbLed(GPIO_00, GPIO_01, GPIO_02, gpioController);
+		sut = ComponentFactory.getRgbLed();
 		fillActions();
 	}
 

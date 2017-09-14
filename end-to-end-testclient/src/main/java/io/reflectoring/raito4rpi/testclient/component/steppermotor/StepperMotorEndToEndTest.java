@@ -1,23 +1,22 @@
 package io.reflectoring.raito4rpi.testclient.component.steppermotor;
 
-import static com.pi4j.io.gpio.RaspiPin.*;
 import static io.reflectoring.raito4rpi.testclient.Raito4RPiEndToEndTestClient.SEPARATOR_LINE;
 
-import com.pi4j.io.gpio.GpioController;
 import com.pi4j.util.Console;
 
 import io.reflectoring.raito4rpi.component.motor.StepperMotor;
 import io.reflectoring.raito4rpi.testclient.component.ComponentEndToEndTest;
+import io.reflectoring.raito4rpi.testclient.component.ComponentFactory;
 import io.reflectoring.raito4rpi.testclient.component.steppermotor.action.RotateAction;
 import io.reflectoring.raito4rpi.testclient.component.steppermotor.action.SetStepSequenceAction;
 
 public final class StepperMotorEndToEndTest extends ComponentEndToEndTest {
 
-	private final StepperMotor sut;
+	public StepperMotor sut;
 
-	public StepperMotorEndToEndTest(String componentId, String componentName, Console console, GpioController gpioController) {
+	public StepperMotorEndToEndTest(String componentId, String componentName, Console console) {
 		super(componentId, componentName, console);
-		sut = new StepperMotor(GPIO_03, GPIO_04, GPIO_05, GPIO_06, gpioController);
+		sut = ComponentFactory.getStepperMotor();
 		fillActions();
 	}
 
