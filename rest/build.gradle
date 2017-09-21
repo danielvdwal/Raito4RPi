@@ -1,0 +1,11 @@
+dependencies {
+	implementation('org.springframework:spring-web:4.3.11.RELEASE')
+}
+
+spotless {
+	java {
+		removeUnusedImports()
+		importOrderFile '../src/main/resources/formatter/spotless.importorder'
+		eclipse().configFile '../src/main/resources/formatter/spotless.eclipse-format.xml'
+	}
+}
