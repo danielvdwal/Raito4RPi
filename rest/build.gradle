@@ -1,4 +1,5 @@
 dependencies {
+	implementation(project(':components'))
 	implementation('org.springframework:spring-web:4.3.11.RELEASE')
 }
 
