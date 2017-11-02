@@ -1,24 +1,28 @@
-package io.reflectoring.raito4rpi.component;
-
-import static com.pi4j.io.gpio.PinState.LOW;
+package io.reflectoring.raito4rpi.component.motor;
 
 import com.pi4j.component.motor.impl.GpioStepperMotorComponent;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 
+import static com.pi4j.io.gpio.PinState.LOW;
+
 /**
  * Represents an actual Stepper Motor.
  */
 public class StepperMotor {
 
-	// anything lower than 2 ms seem not to work when using a single step sequence
-	private static final int DEFAULT_STEP_INTERVAL = 2;
+	// anything lower than 3 ms seems not to work when using a over step sequence
+	private static final int DEFAULT_STEP_INTERVAL = 3;
 
 	// Using a 28BYJ-48 there are 32*64 (64 because of the different gears rotating) steps per revolution
-	private static final int DEFAULT_STEPS_PER_REVOLUTION = 2038;
+	private static final int DEFAULT_STEPS_PER_REVOLUTION = 2048;
+
+	private final int initialStepsPerRevolution;
 
 	private final GpioStepperMotorComponent motor;
+
+	private StepSequenceStrategy stepSequenceStrategy;
 
 	/**
 	 * Contructs an instance using a default step interval as well as a default steps per revolution configuration.
@@ -50,7 +54,7 @@ public class StepperMotor {
 	 * @param pin3
 	 *            the forth pin the motor is connected to
 	 * @param stepInterval
-	 *            time in ms to wait before next step should be executed
+	 *            time in ms to wait before next step should be executed in milliseconds
 	 * @param stepsPerRevolution
 	 *            number of steps it takes the motor to perform a whole revolution (360 degrees)
 	 * @param gpioController
@@ -62,6 +66,7 @@ public class StepperMotor {
 		pins[1] = gpioController.provisionDigitalOutputPin(pin1, LOW);
 		pins[2] = gpioController.provisionDigitalOutputPin(pin2, LOW);
 		pins[3] = gpioController.provisionDigitalOutputPin(pin3, LOW);
+		initialStepsPerRevolution = stepsPerRevolution;
 
 		// stop motor when the program terminates
 		gpioController.setShutdownOptions(true, LOW, pins);
@@ -72,17 +77,21 @@ public class StepperMotor {
 	}
 
 	/**
-	 * Sets the step sequence to use. There are different kinds of step sequences like single step, half step or double step squence.
+	 * Returns the step sequence strategy currently used.
 	 */
-	public void setStepSequence(byte[] sequence) {
-		motor.setStepSequence(sequence);
+	public StepSequenceStrategy getStepSequenceStrategy() {
+		return stepSequenceStrategy;
 	}
 
 	/**
-	 * Returns the step sequence currently used.
+	 * Sets the step sequence strategy to use. There are different strategies like single step, half step or double step squence.
 	 */
-	public byte[] getStepSequence() {
-		return motor.getStepSequence();
+	public void setStepSequenceStrategy(StepSequenceStrategy stepSequenceStrategy) {
+		this.stepSequenceStrategy = stepSequenceStrategy;
+		byte[] stepSequence = stepSequenceStrategy.getStepSequence();
+		motor.setStepSequence(stepSequence);
+		int stepsPerRevolution = (int) (initialStepsPerRevolution / stepSequenceStrategy.getStepModifier());
+		motor.setStepsPerRevolution(stepsPerRevolution);
 	}
 
 	/**

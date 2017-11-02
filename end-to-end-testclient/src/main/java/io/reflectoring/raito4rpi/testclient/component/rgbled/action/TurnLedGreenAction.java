@@ -1,6 +1,6 @@
 package io.reflectoring.raito4rpi.testclient.component.rgbled.action;
 
-import io.reflectoring.raito4rpi.component.RgbLed;
+import io.reflectoring.raito4rpi.component.led.RgbLed;
 
 public class TurnLedGreenAction extends RgbLedAction {
 

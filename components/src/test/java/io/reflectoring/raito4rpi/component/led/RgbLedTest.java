@@ -1,4 +1,4 @@
-package io.reflectoring.raito4rpi.component;
+package io.reflectoring.raito4rpi.component.led;
 
 import static com.pi4j.io.gpio.PinState.HIGH;
 import static com.pi4j.io.gpio.PinState.LOW;
@@ -7,12 +7,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.mockito.quality.Strictness;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 public class RgbLedTest {
+
+	@Rule
+	public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
 	private GpioPinDigitalOutput redPinMock;
 	private GpioPinDigitalOutput greenPinMock;
@@ -28,9 +35,9 @@ public class RgbLedTest {
 		bluePinMock = mock(GpioPinDigitalOutput.class);
 
 		GpioController gpioControllerMock = mock(GpioController.class);
-		when(gpioControllerMock.provisionDigitalOutputPin(GPIO_00, "red", LOW)).thenReturn(redPinMock);
-		when(gpioControllerMock.provisionDigitalOutputPin(GPIO_01, "green", LOW)).thenReturn(greenPinMock);
-		when(gpioControllerMock.provisionDigitalOutputPin(GPIO_02, "blue", LOW)).thenReturn(bluePinMock);
+		doReturn(redPinMock).when(gpioControllerMock).provisionDigitalOutputPin(GPIO_00, "red", LOW);
+		doReturn(greenPinMock).when(gpioControllerMock).provisionDigitalOutputPin(GPIO_01, "green", LOW);
+		doReturn(bluePinMock).when(gpioControllerMock).provisionDigitalOutputPin(GPIO_02, "blue", LOW);
 
 		// initiate system under test
 		sut = new RgbLed(GPIO_00, GPIO_01, GPIO_02, gpioControllerMock);
@@ -41,20 +48,6 @@ public class RgbLedTest {
 		// given
 		when(redPinMock.isHigh()).thenReturn(false);
 		when(greenPinMock.isHigh()).thenReturn(false);
-		when(bluePinMock.isHigh()).thenReturn(true);
-
-		// when
-		boolean on = sut.isOn();
-
-		// then
-		assertThat(on).isTrue();
-	}
-
-	@Test
-	public void isOnIsTrueWhenAllPinsAreHigh() {
-		// given
-		when(redPinMock.isHigh()).thenReturn(true);
-		when(greenPinMock.isHigh()).thenReturn(true);
 		when(bluePinMock.isHigh()).thenReturn(true);
 
 		// when

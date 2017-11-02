@@ -2,7 +2,6 @@ package io.reflectoring.raito4rpi.testclient;
 
 import static org.apache.commons.lang3.StringUtils.trim;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.util.Console;
 
 import io.reflectoring.raito4rpi.testclient.component.ComponentEndToEndTest;
+import io.reflectoring.raito4rpi.testclient.component.ComponentFactory;
 import io.reflectoring.raito4rpi.testclient.component.rgbled.RgbLedEndToEndTest;
 import io.reflectoring.raito4rpi.testclient.component.steppermotor.StepperMotorEndToEndTest;
 
@@ -20,6 +20,7 @@ import io.reflectoring.raito4rpi.testclient.component.steppermotor.StepperMotorE
 public final class Raito4RPiEndToEndTestClient {
 
 	private static final List<ComponentEndToEndTest> componentEndToEndTests = new ArrayList<>();
+	private static JiraAlertsTestSequence jiraAlertsTestSequence = new JiraAlertsTestSequence();
 
 	public static final String SEPARATOR_LINE = "###################################################################################";
 	public static final String EXIT_COMMAND = "exit";
@@ -27,13 +28,14 @@ public final class Raito4RPiEndToEndTestClient {
 	public static final String READ_INPUT_INDICATOR = "> ";
 
 	private static Console console;
-	private static GpioController gpioController;
 
-	public static void main(String[] args) throws IOException {
-		gpioController = GpioFactory.getInstance();
+	public static void main(String[] args) {
+		GpioController gpioController = GpioFactory.getInstance();
+
+		ComponentFactory.init(gpioController);
+
 		console = new Console();
-
-		createComponentList(console, gpioController);
+		createComponentList(console);
 
 		printTitle();
 
@@ -50,6 +52,8 @@ public final class Raito4RPiEndToEndTestClient {
 			} else if (LIST_COMMAND.equalsIgnoreCase(trim(input))) {
 				console.println(LIST_COMMAND);
 				printList();
+			} else if ("JiraAlerts".equalsIgnoreCase(trim(input))) {
+				jiraAlertsTestSequence.execute(console);
 			} else {
 				for (ComponentEndToEndTest componentEndToEndTest : componentEndToEndTests) {
 					if (componentEndToEndTest.getComponentId().equals(trim(input))) {
@@ -64,9 +68,9 @@ public final class Raito4RPiEndToEndTestClient {
 		printExitMessage();
 	}
 
-	private static void createComponentList(Console console, GpioController gpioController) {
-		componentEndToEndTests.add(new RgbLedEndToEndTest("0", "RGB Led", console, gpioController));
-		componentEndToEndTests.add(new StepperMotorEndToEndTest("1", "Stepper Motor", console, gpioController));
+	private static void createComponentList(Console console) {
+		componentEndToEndTests.add(new RgbLedEndToEndTest("0", "RGB Led", console));
+		componentEndToEndTests.add(new StepperMotorEndToEndTest("1", "Stepper Motor", console));
 	}
 
 	private static void printTitle() {
@@ -98,6 +102,8 @@ public final class Raito4RPiEndToEndTestClient {
 			console.print("[%s] - %s", componentEndToEndTest.getComponentId(), componentEndToEndTest.getComponentName());
 			console.println();
 		}
+		console.println();
+		console.println("You can also enter 'JiraAlerts' to test the later JiraAlerts sequence.");
 		console.println();
 	}
 

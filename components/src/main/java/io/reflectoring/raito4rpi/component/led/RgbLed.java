@@ -1,4 +1,4 @@
-package io.reflectoring.raito4rpi.component;
+package io.reflectoring.raito4rpi.component.led;
 
 import static com.pi4j.io.gpio.PinState.HIGH;
 import static com.pi4j.io.gpio.PinState.LOW;
