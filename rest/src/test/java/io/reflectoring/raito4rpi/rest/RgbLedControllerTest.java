@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import io.reflectoring.raito4rpi.service.RgbLedService;
+import io.reflectoring.raito4rpi.core.led.RgbLedService;
 
 public class RgbLedControllerTest extends AbstractRestControllerTest {
 

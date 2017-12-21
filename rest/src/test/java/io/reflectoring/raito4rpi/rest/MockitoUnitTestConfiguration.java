@@ -4,7 +4,7 @@ import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.reflectoring.raito4rpi.service.RgbLedService;
+import io.reflectoring.raito4rpi.core.led.RgbLedService;
 
 @Configuration
 public class MockitoUnitTestConfiguration {
