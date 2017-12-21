@@ -1,0 +1,40 @@
+import java.text.SimpleDateFormat
+
+plugins {
+	id 'org.asciidoctor.convert' version '1.5.3'
+}
+
+dependencies {
+	implementation project(':components')
+	implementation 'org.springframework:spring-web:4.3.11.RELEASE'
+	asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:1.2.2.RELEASE'
+	testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:1.2.2.RELEASE'
+}
+
+spotless {
+	java {
+		removeUnusedImports()
+		importOrderFile '../src/main/resources/formatter/spotless.importorder'
+		eclipse().configFile '../src/main/resources/formatter/spotless.eclipse-format.xml'
+	}
+}
+
+ext {
+	snippetsDir = file 'build/generated-snippets'
+}
+
+test {
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	backends = ['html5']
+	attributes = [
+			'snippets'          : snippetsDir,
+			'version'           : '0.1.0',
+			'date'              : new SimpleDateFormat('MM/dd/yyyy').format(new Date()),
+			'stylesheet'        : 'html-theme/github.css',
+	]
+	inputs.dir snippetsDir
+	dependsOn test
+}

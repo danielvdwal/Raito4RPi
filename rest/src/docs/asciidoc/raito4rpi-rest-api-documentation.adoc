@@ -1,0 +1,50 @@
+= Raito4RPi - REST specification
+Raito4RPi {version} - {date}
+:icons: font
+ifeval::["{backend}" == "html5"]
+:source-highlighter: highlightjs
+endif::[]
+:toc: left
+:toc-title: Table of contents
+:toclevels: 4
+
+:sectlinks:
+:appendix-caption: Appendix
+// activate chapter numbers
+:sectnums:
+// activate page numbers
+:pagenums:
+// image directory
+:imagesdir: images
+:data-uri:
+:figure-caption: Figure
+:example-caption: Example
+
+[[Introduction]]
+== Introduction
+
+Raito4RPi stands for **Raito** (jap: Light) for **R**aspberry**Pi**.
+It uses https://github.com/Pi4J/pi4j[pi4j] to control different kinds of components like RGB-LEDs or Stepper Motors via the GPIO-Pins of a RaspberryPi.
+
+Raito4RPi provides a REST-Interface so that it can be used from other devices or projects, like JiraAlerts
+
+This document contains the technical specification of this interface.
+
+[[resources]]
+== Resources
+The following sections contain the different resources that can be controlled via the Raito4RPi REST-interface.
+Each method of the webservice will be described by explaining the syntax of the call and an example Request as well as an example Response.
+
+=== RGB LED
+The given methods can be used to control a RGB LED.
+You can turn it on/off or turn it to a specific color like red, green, blue or mixed colors like yellow, magenta or cyan.
+
+[[rgbLedOn]]
+==== Turn RGB LED on
+To turn the RGB LED on you can use the following request.
+include::{snippets}/rgbLedTurnOn/curl-request.adoc[]
+
+[[rgbLedOff]]
+==== Turn RGB LED off
+To turn the RGB LED off you can use the following request.
+include::{snippets}/rgbLedTurnOff/curl-request.adoc[]
