@@ -1,7 +1,10 @@
 package io.reflectoring.raito4rpi.core.led;
 
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import io.reflectoring.raito4rpi.core.GpioDriver;
+import static com.pi4j.io.gpio.PinState.HIGH;
+import static com.pi4j.io.gpio.PinState.LOW;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,10 +12,9 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static com.pi4j.io.gpio.PinState.HIGH;
-import static com.pi4j.io.gpio.PinState.LOW;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+
+import io.reflectoring.raito4rpi.core.GpioDriver;
 
 public class RgbLedDriverTest {
 

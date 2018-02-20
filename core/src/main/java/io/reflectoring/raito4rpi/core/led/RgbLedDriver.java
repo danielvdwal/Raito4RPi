@@ -1,11 +1,12 @@
 package io.reflectoring.raito4rpi.core.led;
 
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.PinState;
-import io.reflectoring.raito4rpi.core.GpioDriver;
-
 import static com.pi4j.io.gpio.PinState.HIGH;
 import static com.pi4j.io.gpio.PinState.LOW;
+
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinState;
+
+import io.reflectoring.raito4rpi.core.GpioDriver;
 
 /**
  * Provides all methods to drive a {@link RgbLed}.
