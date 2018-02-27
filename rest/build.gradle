@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
-	implementation project(':core')
-	implementation 'org.springframework:spring-web:4.3.11.RELEASE'
+	compile project(':core')
+	compile 'org.springframework:spring-web:4.3.11.RELEASE'
 	asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:1.2.2.RELEASE'
 	testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:1.2.2.RELEASE'
 }

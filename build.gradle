@@ -13,9 +13,9 @@ buildscript {
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-	implementation(project(':rest'))
-	implementation('org.springframework.boot:spring-boot-starter-web:1.5.6.RELEASE')
-	testImplementation('org.springframework.boot:spring-boot-starter-test:1.5.6.RELEASE')
+	compile(project(':rest'))
+	compile('org.springframework.boot:spring-boot-starter-web:1.5.6.RELEASE')
+	testCompile('org.springframework.boot:spring-boot-starter-test:1.5.6.RELEASE')
 }
 
 allprojects{
@@ -40,10 +40,10 @@ allprojects{
 	}
 
 	dependencies{
-		implementation('org.apache.commons:commons-lang3:3.6')
-		testImplementation('org.mockito:mockito-core:2.8.47')
-		testImplementation('org.assertj:assertj-core:3.8.0')
-		testImplementation('junit:junit:4.12')
+		compile('org.apache.commons:commons-lang3:3.6')
+		testCompile('org.mockito:mockito-core:2.8.47')
+		testCompile('org.assertj:assertj-core:3.8.0')
+		testCompile('junit:junit:4.12')
 	}
 
 	idea {
@@ -81,4 +81,8 @@ spotless {
 		importOrderFile 'src/main/resources/formatter/spotless.importorder'
 		eclipse().configFile 'src/main/resources/formatter/spotless.eclipse-format.xml'
 	}
+}
+
+bootRepackage {
+	mainClass = 'io.reflectoring.raito4rpi.Raito4RPiApplication'
 }
